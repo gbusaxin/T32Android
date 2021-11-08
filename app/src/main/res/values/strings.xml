@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">T32Android</string>
+    <string name="start_of_training">начало тренировки</string>
+    <string name="name">Имя</string>
+    <string name="height">Рост</string>
+    <string name="weight">Вес</string>
+    <string name="start">Начать</string>
+    <string name="training">Тренировка</string>
+    <string name="analitics">Аналитика</string>
+    <string name="settings">Настройки</string>
+    <string name="text_ex">Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</string>
+    <string name="distance_km">РАССТОЯНИЕ (КМ)</string>
+    <string name="prised">ПРИСЕДАНИЯ (РАЗ)</string>
+    <string name="enter">внести</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="progress">Прогресс:</string>
+    <string name="target_day">цель на день: \n 2500 points</string>
+    <string name="notafications">Уведомления</string>
+    <string name="clear_data">очистить \n данные</string>
+</resources>
