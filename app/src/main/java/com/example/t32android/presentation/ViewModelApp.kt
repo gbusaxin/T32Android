@@ -5,16 +5,24 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.t32android.data.ApiFactory
+import com.example.t32android.domain.pojo.QuestionItem
 import com.example.t32android.domain.pojo.TrainingItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
 
 class ViewModelApp(application: Application) : AndroidViewModel(application) {
 
     private val compositeDisposable = CompositeDisposable()
 
     var _trainingInfo = MutableLiveData<List<TrainingItem>>()
+    var _questionLd = MutableLiveData<Response<QuestionItem>>()
+
+    fun sendQuestion(question:QuestionItem){
+        val response = ApiFactory.apiService.sendQuestion(question)
+        _questionLd.value = response
+    }
 
     fun loadData(dayOfWeek: Int) {
         val disposable = when (dayOfWeek) {

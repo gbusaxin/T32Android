@@ -1,8 +1,13 @@
 package com.example.t32android.data
 
+import com.example.t32android.domain.pojo.QuestionItem
 import com.example.t32android.domain.pojo.TrainingItem
 import io.reactivex.Single
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface ApiService {
 
@@ -26,4 +31,10 @@ interface ApiService {
 
     @GET("monday.json")
     fun getSunday(): Single<List<TrainingItem>>
+
+    @POST("ask.php")
+    fun sendQuestion(@Body question: QuestionItem): Response<QuestionItem>
+
+    @GET("response.php")
+    fun getAnswer(id:Int):String
 }

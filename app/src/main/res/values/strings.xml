@@ -18,4 +18,9 @@
     <string name="target_day">цель на день: \n 2500 points</string>
     <string name="notafications">Уведомления</string>
     <string name="clear_data">очистить \n данные</string>
+    <string name="ask_trainer">вопрос \n тренеру</string>
+    <string name="your_question">Твой вопрос</string>
+    <string name="answer">Ответ:</string>
+    <string name="question_example">Вопрос пример: какой должен быть пульс при ускорениях?</string>
+    <string name="answer_example">2 раза в день это упражнение делать спина болеть не будет</string>
 </resources>

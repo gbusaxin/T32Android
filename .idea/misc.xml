@@ -6,18 +6,23 @@
         <entry key="app/src/main/res/drawable/custom_buttom.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/drawable/custom_button.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/drawable/custom_button_orange.xml" value="0.29384615384615387" />
+        <entry key="app/src/main/res/drawable/custom_circle_button.xml" value="0.2916666666666667" />
+        <entry key="app/src/main/res/drawable/custom_circle_image.xml" value="0.2916666666666667" />
         <entry key="app/src/main/res/drawable/custom_constraint.xml" value="0.2777777777777778" />
+        <entry key="app/src/main/res/drawable/custom_constraint_white.xml" value="0.2916666666666667" />
         <entry key="app/src/main/res/drawable/custom_progress_bar.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/drawable/custom_textinput_layout.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/drawable/switch_thumb_custom.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/switch_track_custom.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/layout/activity_analitic.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_ask.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_menu.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_setting.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_training.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_welcome.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_training_info.xml" value="0.25679347826086957" />
+        <entry key="app/src/main/res/layout/question_item.xml" value="0.23505434782608695" />
       </map>
     </option>
   </component>
