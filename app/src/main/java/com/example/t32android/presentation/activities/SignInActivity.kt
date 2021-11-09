@@ -100,13 +100,14 @@ class SignInActivity : AppCompatActivity() {
             return userItem
         }
 
-        fun parseToDouble(str: String): Double {
-            return try {
-                str.trim().toDouble()
-            } catch (e: Exception) {
-                0.0
-            }
+    fun parseToDouble(str: String): Double {
+        return try {
+            str.trim().toDouble()
+        } catch (e: Exception) {
+            0.0
         }
+    }
+
     fun parseToInt(str: String): Int {
         return try {
             str.trim().toInt()

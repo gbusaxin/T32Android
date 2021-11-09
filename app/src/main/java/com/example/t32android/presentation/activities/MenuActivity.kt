@@ -25,4 +25,9 @@ class MenuActivity : AppCompatActivity() {
         startActivity(Intent(this@MenuActivity,SettingActivity::class.java))
     }
 
+    fun onClickToAskActivity(view: View) {
+        startActivity(Intent(this@MenuActivity,AskActivity::class.java))
+
+    }
+
 }

@@ -33,8 +33,8 @@ interface ApiService {
     fun getSunday(): Single<List<TrainingItem>>
 
     @POST("ask.php")
-    fun sendQuestion(@Body question: QuestionItem): Response<QuestionItem>
+    fun sendQuestion(@Body question: QuestionItem): Call<TrainingItem>
 
     @GET("response.php")
-    fun getAnswer(id:Int):String
+    fun getAnswer(id: Int): String
 }

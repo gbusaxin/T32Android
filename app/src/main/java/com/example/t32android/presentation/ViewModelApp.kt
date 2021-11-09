@@ -20,8 +20,7 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
     var _questionLd = MutableLiveData<Response<QuestionItem>>()
 
     fun sendQuestion(question:QuestionItem){
-        val response = ApiFactory.apiService.sendQuestion(question)
-        _questionLd.value = response
+        ApiFactory.apiService.sendQuestion(question)
     }
 
     fun loadData(dayOfWeek: Int) {

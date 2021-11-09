@@ -10,6 +10,9 @@ data class QuestionItem(
     val question:String? = null,
     @SerializedName("id")
     @Expose
-    val id:Int? = 0
+    val id:Int? = 0,
+
+    @Transient
+    var answer:String? = null
 
 )

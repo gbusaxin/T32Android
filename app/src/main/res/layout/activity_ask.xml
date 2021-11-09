@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDayOfTheWeek">
 
         <EditText
-            android:id="@+id/editTextQuestion"
+            android:id="@+id/editTextQuestionQuestion"
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
