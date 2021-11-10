@@ -14,7 +14,7 @@
         <entry key="app/src/main/res/drawable/custom_textinput_layout.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/drawable/switch_thumb_custom.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/drawable/switch_track_custom.xml" value="0.16510416666666666" />
-        <entry key="app/src/main/res/layout/activity_analitic.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_analitic.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ask.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_menu.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_setting.xml" value="0.25" />

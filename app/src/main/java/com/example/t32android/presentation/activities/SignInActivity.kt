@@ -1,93 +1,59 @@
 package com.example.t32android.presentation.activities
 
-import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.t32android.R
-import com.example.t32android.data.MyInternalStorage
+import com.example.t32android.data.PreferenceUser
+import com.example.t32android.data.PreferenceUser.userHeight
+import com.example.t32android.data.PreferenceUser.userName
+import com.example.t32android.data.PreferenceUser.userWeight
 import com.example.t32android.domain.db.UserItem
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.*
 
 class SignInActivity : AppCompatActivity() {
 
-//    companion object {
-//        const val USER_FILE_PATH = "userData.user"
-//    }
-
-    val myInternalStorage = MyInternalStorage(this)
+    lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+
+        pref = PreferenceUser.mySharedPreferences(this, PreferenceUser.USER_PREF)
+
     }
 
-//    fun readFileInternalStorage():UserItem? {
-//        try {
-//            val fileInputStream: FileInputStream = openFileInput(USER_FILE_PATH)
-//            val reader = BufferedReader(InputStreamReader(fileInputStream))
-//            val sb = StringBuffer()
-//            var line: String = reader.readLine()
-//            while (line != null) {
-//                sb.append(line)
-//                line = reader.readLine()
-//            }
-//            return Json.decodeFromString<UserItem>(sb.toString())
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//        return null
-//    }
+    fun onClickToMenuActivity(view: View) {
+        val name = et_distance.text.toString()
+        val height = parseToInt(et_prised.text.toString())
+        val weight = parseToInt(et_weight.text.toString())
 
-//    private fun createUpdateFile(userData:String) {
-//        var json = Json.encodeToString(userData)
-//        val outputStream: OutputStream?
-//        try {
-//            outputStream = openFileOutput(USER_FILE_PATH, Context.MODE_PRIVATE)
-//
-//            let {
-//                with(outputStream) {
-//                    write(json.toByteArray())
-//                    flush()
-//                    close()
-//                }
-//            }
-//            Toast.makeText(this,json,Toast.LENGTH_LONG).show()
-//            Log.d("WRITE_OUTPUT",json)
-//
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//    }
+        if (name != "" && height != 0 && weight != 0) {
 
-        fun onClickToMenuActivity(view: View) {
-            val user = getUserDataFromXml()
-            val json = Json.encodeToString(user)
-            myInternalStorage.saveData(json,MyInternalStorage.FILE_PATH)
-//            createUpdateFile(json)
-//            val userItem =  readFileInternalStorage()
-//            Toast.makeText(this,userItem.toString(),Toast.LENGTH_LONG).show()
+            pref.userName = name
+            pref.userHeight = height
+            pref.userWeight = weight
+
+            Toast.makeText(
+                this,
+                "Name: ${name}, Height: ${height}, Weight: $weight",
+                Toast.LENGTH_SHORT
+            ).show()
+
             val intent = Intent(this@SignInActivity, MenuActivity::class.java)
-//            intent.putExtra(USER_FILE_PATH, json)
             startActivity(intent)
             finish()
 
+        } else {
+            Toast.makeText(this,"Данные неккоректные",Toast.LENGTH_SHORT).show()
         }
-
-        private fun getUserDataFromXml(): UserItem {
-            val name = et_distance.text.toString()
-            val height = parseToDouble(et_prised.text.toString())
-            val weight = parseToInt(et_weight.text.toString())
-            val userItem = UserItem(name, height, weight, null)
-            return userItem
-        }
+    }
 
     fun parseToDouble(str: String): Double {
         return try {
@@ -104,4 +70,4 @@ class SignInActivity : AppCompatActivity() {
             0
         }
     }
-    }
+}

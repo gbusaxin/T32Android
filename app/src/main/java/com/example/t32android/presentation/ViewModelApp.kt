@@ -18,27 +18,6 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
     private val compositeDisposable = CompositeDisposable()
 
     var _trainingInfo = MutableLiveData<List<TrainingItem>>()
-    var _questionLd = MutableLiveData<List<QuestionItem>>()
-
-    fun sendQuestion(question:QuestionItem){
-        ApiFactory.apiService.sendQuestion(question)
-    }
-
-    fun getAnswer(id:Int = 0){
-        val disposable = ApiFactory.apiService.getAnswer(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if(_questionLd.value?.get(id)?.id == id && it != null){
-                        _questionLd.value?.get(id)?.answer = it
-                }else{
-                    Toast.makeText(getApplication(),"FAIL",Toast.LENGTH_SHORT).show()
-                }
-            },{
-
-            })
-            compositeDisposable.add(disposable)
-    }
 
     fun loadData(dayOfWeek: Int) {
         val disposable = when (dayOfWeek) {

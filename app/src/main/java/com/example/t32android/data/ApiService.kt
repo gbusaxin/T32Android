@@ -1,5 +1,6 @@
 package com.example.t32android.data
 
+import com.example.t32android.domain.pojo.AnswerItem
 import com.example.t32android.domain.pojo.QuestionItem
 import com.example.t32android.domain.pojo.TrainingItem
 import io.reactivex.Single
@@ -33,7 +34,7 @@ interface ApiService {
     fun getSunday(): Single<List<TrainingItem>>
 
     @POST("ask.php")
-    fun sendQuestion(@Body question: QuestionItem): Call<TrainingItem>
+    fun sendQuestion(@Body question: QuestionItem): Call<AnswerItem>
 
     @GET("response.php")
     fun getAnswer(@Body id: Int): Single<String>
