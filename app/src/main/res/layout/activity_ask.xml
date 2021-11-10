@@ -87,7 +87,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewAsk"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -113,8 +113,8 @@
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-        app:layout_constraintStart_toStartOf="@+id/recyclerView" />
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewAsk"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewAsk"
+        app:layout_constraintStart_toStartOf="@+id/recyclerViewAsk" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

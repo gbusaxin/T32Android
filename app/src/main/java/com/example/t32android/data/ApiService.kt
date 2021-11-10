@@ -36,5 +36,7 @@ interface ApiService {
     fun sendQuestion(@Body question: QuestionItem): Call<TrainingItem>
 
     @GET("response.php")
-    fun getAnswer(id: Int): String
+    fun getAnswer(@Body id: Int): Single<String>
 }
+
+

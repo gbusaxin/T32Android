@@ -15,6 +15,6 @@ data class UserItem(
     val weight: Int? = 0,
 
 
-    val points: Double? = 0.0
+    var points: Int? = 0
 
 )

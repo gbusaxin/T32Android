@@ -7,12 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import com.example.t32android.R
+import com.example.t32android.data.MyInternalStorage
 import com.example.t32android.domain.db.UserItem
 import kotlinx.android.synthetic.main.fragment_training_info.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 class TrainingInfoFragment() : Fragment() {
 
     val progressLiveData = MutableLiveData<UserItem>()
+    lateinit var user:UserItem
+    val myInternalStorage:MyInternalStorage = MyInternalStorage(context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,15 +35,15 @@ class TrainingInfoFragment() : Fragment() {
         return inflater.inflate(R.layout.fragment_training_info, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        textViewProgressTraining
-        progressBarTraining
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        textViewProgressTraining
+//        progressBarTraining
+//        val jsonUser = myInternalStorage.getData(MyInternalStorage.FILE_PATH)
+//        user = Json.decodeFromString(jsonUser)
+//    }
 
-    fun setProgress(int:Int){
-        progressBarTraining.setProgress(int)
-    }
+
 
     fun currentProgressInPercent(userWeight:Int,distance: Int,prised: Int):Int{
         val currentNumber = makeProgress(distance,prised,userWeight)
@@ -55,24 +60,4 @@ class TrainingInfoFragment() : Fragment() {
     companion object{
         const val TARGET_POINT = 25000
     }
-
-//    fun readFileInternalStorage(view:View): UserItem? {
-//        try {
-//            val fileInputStream: FileInputStream? =
-//                context?.openFileInput(SignInActivity.USER_FILE_PATH) ?: null
-//            val reader = BufferedReader(InputStreamReader(fileInputStream))
-//            val sb = StringBuffer()
-//            var line: String = reader.readLine()
-//            while (line != null) {
-//                sb.append(line)
-//                line = reader.readLine()
-//            }
-//            return Json.decodeFromString<UserItem>(sb.toString())
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//        return null
-//    }
-
-
 }

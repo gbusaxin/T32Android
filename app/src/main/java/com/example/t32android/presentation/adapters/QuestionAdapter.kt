@@ -21,7 +21,7 @@ class QuestionAdapter:RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>()
         val item = list[position]
         with(holder){
             question.text = item.question
-
+            answer.text = item.answer
         }
     }
 

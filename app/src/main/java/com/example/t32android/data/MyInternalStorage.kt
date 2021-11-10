@@ -8,14 +8,14 @@ import java.io.FileOutputStream
 import java.io.InputStreamReader
 import java.lang.Exception
 
-class MyInternalStorage(val context:Context) {
+class MyInternalStorage(val context:Context?) {
 
-    fun saveData(userData: String):Boolean {
-        val output = context.openFileOutput(FILE_PATH, Context.MODE_PRIVATE)
+    fun saveData(userData: String,type:String):Boolean {
+        val output = context?.openFileOutput(type, Context.MODE_PRIVATE)
         try {
-            output.write(userData.toByteArray())
-            output.flush()
-            output.close()
+            output?.write(userData.toByteArray())
+            output?.flush()
+            output?.close()
             Toast.makeText(context, "$userData is saved", Toast.LENGTH_LONG).show()
             return true
         } catch (e:Exception){
@@ -25,8 +25,8 @@ class MyInternalStorage(val context:Context) {
         }
     }
 
-    fun getData():String{
-        val input = context.openFileInput(FILE_PATH)
+    fun getData(type:String):String{
+        val input = context?.openFileInput(type)
         val reader = BufferedReader(InputStreamReader(input))
         val builder = StringBuilder()
         var line:String? = null
@@ -39,6 +39,7 @@ class MyInternalStorage(val context:Context) {
     }
 
     companion object {
+        const val LIST_PATH = "userlist.txt"
         const val FILE_PATH = "user.txt"
     }
 
