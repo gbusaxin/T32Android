@@ -5,23 +5,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.t32android.R
-import com.example.t32android.domain.pojo.QuestionItem
+import com.example.t32android.domain.pojo.QuestionAnswerItem
 import kotlinx.android.synthetic.main.question_item.view.*
 
-class QuestionAdapter:RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
+class QuestionAdapter : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
-    var list:List<QuestionItem> = listOf()
+    var list: List<QuestionAnswerItem> = listOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()          // redo
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
-        return QuestionViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.question_item,parent,false))
+        return QuestionViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.question_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
         val item = list[position]
-        with(holder){
+        with(holder) {
             question.text = item.question
-            answer.text = item.answer
+            if (item.answer != "") {
+                answer.text = item.answer
+            } else {
+                answer.text = "Тренер еще думает над ответом."
+            }
         }
     }
 
@@ -29,7 +39,7 @@ class QuestionAdapter:RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>()
         return list.size
     }
 
-    inner class QuestionViewHolder(view:View):RecyclerView.ViewHolder(view){
+    inner class QuestionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val question = view.textViewQuestion
         val answer = view.textViewAnswer

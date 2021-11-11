@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.t32android.R
 import com.example.t32android.data.PreferenceUser
 import com.example.t32android.data.PreferenceUser.deleteUser
+import com.example.t32android.data.PreferenceUser.myEdit
 import com.example.t32android.data.PreferenceUser.userName
 import java.lang.Exception
 
@@ -24,13 +25,16 @@ class SettingActivity : AppCompatActivity() {
     }
 
     fun onClickDeleteUser(view: View) {
-       pref.deleteUser
-        if (pref.userName == null) {
+       pref.myEdit {
+           it.clear()
+           it.apply()
+       }
+        if (pref.userName == "") {
             Toast.makeText(this, "User's been deleted", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, SignInActivity::class.java))
             finish()
         } else{
-            Toast.makeText(this, "User hasn't been deleted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${pref.userName}", Toast.LENGTH_SHORT).show()
         }
     }
 

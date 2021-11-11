@@ -2,22 +2,38 @@ package com.example.t32android.presentation
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.t32android.data.ApiFactory
-import com.example.t32android.domain.pojo.QuestionItem
+import com.example.t32android.domain.pojo.QuestionAnswerItem
 import com.example.t32android.domain.pojo.TrainingItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 
 class ViewModelApp(application: Application) : AndroidViewModel(application) {
 
     private val compositeDisposable = CompositeDisposable()
 
     var _trainingInfo = MutableLiveData<List<TrainingItem>>()
+    var _answerInfo = MutableLiveData<List<QuestionAnswerItem>>()
+
+    fun sendPost(questionItem: QuestionAnswerItem) {
+        val response = ApiFactory.apiService.sendQuestion(questionItem)
+    }
+
+    fun getAnswer(id: Int) {
+        val disposable = ApiFactory.apiService.getAnswer(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _answerInfo.value?.get(id)?.answer = it
+                Log.d("ANSWER_CHECK", it.toString())
+            }, {
+
+            })
+        compositeDisposable.add(disposable)
+    }
 
     fun loadData(dayOfWeek: Int) {
         val disposable = when (dayOfWeek) {
@@ -27,9 +43,9 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT",it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT",it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
             2 ->
                 ApiFactory.apiService.getTuesday()
@@ -37,9 +53,9 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT",it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT",it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
             3 ->
                 ApiFactory.apiService.getWednesday()
@@ -47,9 +63,9 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT",it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT",it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
             4 ->
                 ApiFactory.apiService.getThursday()
@@ -57,9 +73,9 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT",it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT",it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
             5 ->
                 ApiFactory.apiService.getFriday()
@@ -67,9 +83,9 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT",it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT",it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
             6 ->
                 ApiFactory.apiService.getSaturday()
@@ -77,9 +93,9 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT",it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT",it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
             7 ->
                 ApiFactory.apiService.getSunday()
@@ -87,9 +103,9 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT",it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT",it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
 
 

@@ -2,6 +2,9 @@ package com.example.t32android.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.preference.PreferenceManager
+import com.example.t32android.data.PreferenceUser.userName
+import com.example.t32android.data.PreferenceUser.userPoints
 
 object PreferenceUser {
 
@@ -10,6 +13,10 @@ object PreferenceUser {
     val USER_HEIGHT = "USER_HEIGHT"
     val USER_WEIGHT = "USER_WEIGHT"
     val USER_POINTS = "USER_POINTS"
+    val USER_DAY = "USER_DAY"
+
+    fun defaultPreference(context: Context): SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
     fun mySharedPreferences(context: Context, name: String): SharedPreferences =
         context.getSharedPreferences(name, Context.MODE_PRIVATE)
@@ -17,7 +24,7 @@ object PreferenceUser {
     inline fun SharedPreferences.myEdit(operation: (SharedPreferences.Editor) -> Unit) {
         val myEdit = edit()
         operation(myEdit)
-        myEdit.commit()
+        myEdit.apply()
     }
 
     var SharedPreferences.userName
@@ -49,6 +56,15 @@ object PreferenceUser {
     set(value) {
         myEdit {
             it.clear()
+            it.apply()
+        }
+    }
+
+    var SharedPreferences.userDay
+    get() = getInt(USER_DAY,0)
+    set(value) {
+        myEdit {
+            it.putInt(USER_DAY,value)
         }
     }
 

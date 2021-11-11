@@ -3,11 +3,14 @@ package com.example.t32android.domain.pojo
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class AnswerItem(
-    @SerializedName("answer")
+data class QuestionAnswerItem(
+
+    @SerializedName("ask")
     @Expose
-    val question:String? = null,
+    var question:String? = "",
+    @Transient
+    var answer:String? = "",
     @SerializedName("id")
     @Expose
-    val id:Int? = 0
+    var id:Int? = 0
 )

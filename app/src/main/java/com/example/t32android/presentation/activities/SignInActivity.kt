@@ -8,14 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.t32android.R
 import com.example.t32android.data.PreferenceUser
+import com.example.t32android.data.PreferenceUser.userDay
 import com.example.t32android.data.PreferenceUser.userHeight
 import com.example.t32android.data.PreferenceUser.userName
 import com.example.t32android.data.PreferenceUser.userWeight
-import com.example.t32android.domain.db.UserItem
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import java.io.*
+import java.util.*
 
 class SignInActivity : AppCompatActivity() {
 
@@ -36,6 +35,10 @@ class SignInActivity : AppCompatActivity() {
 
         if (name != "" && height != 0 && weight != 0) {
 
+            val calendar = Calendar.getInstance()
+            val numberOfDay = (calendar.get(Calendar.DAY_OF_WEEK) - 1)
+
+            pref.userDay = numberOfDay
             pref.userName = name
             pref.userHeight = height
             pref.userWeight = weight
