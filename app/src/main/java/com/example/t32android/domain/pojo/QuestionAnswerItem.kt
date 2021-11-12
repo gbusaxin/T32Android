@@ -8,7 +8,8 @@ data class QuestionAnswerItem(
     @SerializedName("ask")
     @Expose
     var question:String? = "",
-    @Transient
+    @SerializedName("answer")
+    @Expose
     var answer:String? = "",
     @SerializedName("id")
     @Expose

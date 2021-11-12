@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.question_item.view.*
 
 class QuestionAdapter : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
-    var list: List<QuestionAnswerItem> = listOf()
+    var list: MutableList<QuestionAnswerItem> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()          // redo
@@ -25,14 +25,13 @@ class QuestionAdapter : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>
 
     override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
         val item = list[position]
-        with(holder) {
-            question.text = item.question
+
+            holder.question.text = item.question
             if (item.answer != "") {
-                answer.text = item.answer
+                holder.answer.text = item.answer
             } else {
-                answer.text = "Тренер еще думает над ответом."
+                holder.answer.text = "Тренер еще думает над ответом."
             }
-        }
     }
 
     override fun getItemCount(): Int {

@@ -32,17 +32,17 @@ class WelcomeActivity : AppCompatActivity() {
         }
         anim.start()
         if (!ifUserExists()) {
+            Handler().postDelayed({
+                startActivity(Intent(this@WelcomeActivity, SignInActivity::class.java))
+                finish()
+            }, SPLASH_TIME)
+        }else{
             val calendar = Calendar.getInstance()
             val numberOfDay = (calendar.get(Calendar.DAY_OF_WEEK) - 1)
             val currentDay = pref.userDay
             if (numberOfDay != currentDay){
                 pref.userPoints = 0
             }
-            Handler().postDelayed({
-                startActivity(Intent(this@WelcomeActivity, SignInActivity::class.java))
-                finish()
-            }, SPLASH_TIME)
-        }else{
             Handler().postDelayed({
                 startActivity(Intent(this@WelcomeActivity, MenuActivity::class.java))
                 finish()

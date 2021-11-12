@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.t32android.R
 import com.example.t32android.data.PreferencesAskAns
+import com.example.t32android.data.PreferencesAskAns.myEditQA
 import com.example.t32android.data.PreferencesAskAns.myList
 import com.example.t32android.domain.pojo.QuestionAnswerItem
 import com.example.t32android.presentation.ViewModelApp
@@ -16,13 +18,14 @@ import com.example.t32android.presentation.adapters.QuestionAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_ask.*
+import java.lang.reflect.Type
 
 class AskActivity : AppCompatActivity() {
 
-    lateinit var prefAsk:SharedPreferences
-    lateinit var viewModel:ViewModelApp
-    lateinit var adapter:QuestionAdapter
-    private lateinit var list:MutableList<QuestionAnswerItem>
+    lateinit var prefAsk: SharedPreferences
+    lateinit var viewModel: ViewModelApp
+    lateinit var adapter: QuestionAdapter
+    private lateinit var list: MutableList<QuestionAnswerItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,50 +34,76 @@ class AskActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[ViewModelApp::class.java]
 
         loadData()
+
         buildRecyclerView()
 
-        if (editTextQuestionQuestion.text.toString() != "") {
-            imageViewSendQuestion.setOnClickListener {
-                val textAnswer = editTextQuestionQuestion.text.toString()
-                val item = QuestionAnswerItem(answer = textAnswer)
+
+        imageViewSendQuestion.setOnClickListener {
+            if (editTextQuestionQuestion.text.toString() != "") {
+                val textQuestion = editTextQuestionQuestion.text.toString()
+                val item = QuestionAnswerItem(question = textQuestion)
                 list.add(item)
-                saveData()
                 for (i in 0 until list.size) {
                     list[i].id = i
                     viewModel.sendPost(list[i])
                 }
+                adapter.list = list
+                recyclerViewAsk.adapter = adapter
+                saveData()
+                editTextQuestionQuestion.text.clear()
+            } else {
+                Toast.makeText(this, "Поле вопроса пустое.", Toast.LENGTH_SHORT).show()
+                clearSherPref()
+                adapter.list.clear()
+                adapter.notifyDataSetChanged()
             }
         }
 
+
     }
 
-    private fun buildRecyclerView(){
+    private fun buildRecyclerView() {
         adapter = QuestionAdapter()
         adapter.list = list
         recyclerViewAsk.adapter = adapter
     }
 
-    fun loadData(){
-        prefAsk = PreferencesAskAns.mySharedPreferences(this,PreferencesAskAns.PREF_NAME)
+    fun loadData() {
+        prefAsk = PreferencesAskAns.mySharedPreferences(this, PreferencesAskAns.PREF_NAME)
 
-        val gson = Gson()
+        val questionAnswer: MutableList<QuestionAnswerItem>? =
+            prefAsk.myList?.let { Gson().fromJson(it) }
 
-        val json = prefAsk.myList
-        val turnsType = object : TypeToken<List<QuestionAnswerItem>>() {}.type
-        list = gson.fromJson(json,turnsType)
+        if (questionAnswer != null) {
+            list = questionAnswer
+        } else {
+            list = mutableListOf()
+        }
 
-        for (i in 0 until list.size){
-            viewModel.getAnswer(i)
+        for (i in 0 until list.size) {
+//            viewModel.getAnswer(i)
             val answer = viewModel._answerInfo.value?.get(i)?.answer
-            list[i].answer = answer
+            if(answer != null) {
+                list[i].answer = answer
+            }else{
+                list[i].answer = "Тренер еще думает над ответом."
+            }
+        }
+    }
+    fun clearSherPref() {
+        prefAsk.myEditQA {
+            it.clear()
+            it.apply()
         }
     }
 
-    fun saveData(){
-        val gson = Gson()
-        val str = gson.toJson(list)
+    inline fun <reified T> Gson.fromJson(json: String) =
+        this.fromJson<T>(json, object : TypeToken<T>() {}.type)
+
+    fun saveData() {
+        val str = Gson().toJson(list)
         prefAsk.myList = str
-        Log.d("CHECK_DATA",prefAsk.myList.toString())
+        Log.d("CHECK_DATA", prefAsk.myList.toString())
     }
 
     fun OnClickFromAskAktivityBack(view: View) {
