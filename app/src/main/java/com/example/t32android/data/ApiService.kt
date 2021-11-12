@@ -34,8 +34,8 @@ interface ApiService {
     @POST("ask.php")
     fun sendQuestion(@Body question: QuestionAnswerItem): Call<String>
 
-    @GET("response.php")
-    fun getAnswer(@Body id: Int): Single<String>
+    @POST("response.php")
+    fun getAnswer(@Body id: Int?): Call<String?>
 }
 
 

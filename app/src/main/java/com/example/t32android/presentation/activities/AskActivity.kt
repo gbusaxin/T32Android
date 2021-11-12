@@ -18,7 +18,6 @@ import com.example.t32android.presentation.adapters.QuestionAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_ask.*
-import java.lang.reflect.Type
 
 class AskActivity : AppCompatActivity() {
 
@@ -45,7 +44,7 @@ class AskActivity : AppCompatActivity() {
                 list.add(item)
                 for (i in 0 until list.size) {
                     list[i].id = i
-                    viewModel.sendPost(list[i])
+                    viewModel.sendQuestion(list[i])
                 }
                 adapter.list = list
                 recyclerViewAsk.adapter = adapter
@@ -81,7 +80,7 @@ class AskActivity : AppCompatActivity() {
         }
 
         for (i in 0 until list.size) {
-//            viewModel.getAnswer(i)
+            viewModel.getAnswer(i)
             val answer = viewModel._answerInfo.value?.get(i)?.answer
             if(answer != null) {
                 list[i].answer = answer
