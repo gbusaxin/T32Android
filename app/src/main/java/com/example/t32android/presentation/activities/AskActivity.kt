@@ -44,7 +44,7 @@ class AskActivity : AppCompatActivity() {
                 list.add(item)
                 for (i in 0 until list.size) {
                     list[i].id = i
-                    viewModel.sendQuestion(list[i])
+                    list[i].question?.let { it1 -> viewModel.sendQuestion(it1,i) }
                 }
                 adapter.list = list
                 recyclerViewAsk.adapter = adapter

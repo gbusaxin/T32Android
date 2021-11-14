@@ -21,32 +21,26 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
     var _trainingInfo = MutableLiveData<List<TrainingItem>>()
     var _answerInfo = MutableLiveData<List<QuestionAnswerItem>>()
 
-    fun sendQuestion(questionItem: QuestionAnswerItem) {
-        ApiFactory.apiService.sendQuestion(questionItem)
+    fun sendQuestion(question:String,id:Int){
+        val response = ApiFactory.apiService.sendQuestion(question,id)
             .enqueue(object : Callback<String?>{
                 override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
-                    if (p1.isSuccessful){
-                        Log.i("SEND_QUESTION","${p1.toString()} , ${p0.toString()}")
-                    }
+                    Log.d("QUESTION_SEND_RESPONSE", p1.toString())
+                    Log.d("QUESTION_SEND_CALL", p0.toString())
                 }
 
                 override fun onFailure(p0: Call<String?>, p1: Throwable) {
                     p1.printStackTrace()
                 }
-
             })
-
-
     }
 
-    fun getAnswer(id: Int) {
+    fun getAnswer(id:Int){
         ApiFactory.apiService.getAnswer(id)
-            .enqueue(object : Callback<String?>{
+            .enqueue(object :Callback<String?>{
                 override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
-                    if (p1.isSuccessful) {
-                        _answerInfo.value?.get(id)?.answer = p1.body()
-                        Log.i("GET_ANSWER", "${p1.toString()} , ${p0.toString()}")
-                    }
+                   val answer = p1.body()
+                    _answerInfo.value?.get(id)?.answer = answer
                 }
 
                 override fun onFailure(p0: Call<String?>, p1: Throwable) {
