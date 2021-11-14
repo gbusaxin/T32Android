@@ -20,7 +20,7 @@ class TrainingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_training)
 
         val calendar = Calendar.getInstance()
-        val numberOfDay = (calendar.get(Calendar.DAY_OF_WEEK) - 1)
+        val numberOfDay = (calendar.get(Calendar.DAY_OF_WEEK))
         Log.d("DAY_OF_WEEK_INT", numberOfDay.toString() + " :NUMBER OF DAY")
         viewModel = ViewModelProvider(this)[ViewModelApp::class.java]
         viewModel.loadData(numberOfDay)
@@ -34,13 +34,13 @@ class TrainingActivity : AppCompatActivity() {
 
     private fun dayOfWeekIntToString(numberDayOfWeek: Int):String{
         return when(numberDayOfWeek){
-            1 -> "Понедельник"
-            2 -> "Вторник"
-            3 -> "Среда"
-            4 -> "Четверг"
-            5 -> "Пятница"
-            6 -> "Суббота"
-            7 -> "Воскресенье"
+            2 -> "Понедельник"
+            3 -> "Вторник"
+            4 -> "Среда"
+            5 -> "Четверг"
+            6 -> "Пятница"
+            7 -> "Суббота"
+            1 -> "Воскресенье"
             else -> "ERROR"
         }
     }

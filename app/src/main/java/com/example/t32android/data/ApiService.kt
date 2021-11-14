@@ -26,7 +26,7 @@ interface ApiService {
     @GET("saturday.json")
     fun getSaturday(): Single<List<TrainingItem>>
 
-    @GET("monday.json")
+    @GET("sunday.json")
     fun getSunday(): Single<List<TrainingItem>>
 
     @FormUrlEncoded

@@ -25,8 +25,8 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
         val response = ApiFactory.apiService.sendQuestion(question,id)
             .enqueue(object : Callback<String?>{
                 override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
-                    Log.d("QUESTION_SEND_RESPONSE", p1.toString())
-                    Log.d("QUESTION_SEND_CALL", p0.toString())
+                    Log.i("QUESTION_SEND_RESPONSE", p1.toString())
+                    Log.i("QUESTION_SEND_CALL", p0.toString())
                 }
 
                 override fun onFailure(p0: Call<String?>, p1: Throwable) {
@@ -41,6 +41,8 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                 override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
                    val answer = p1.body()
                     _answerInfo.value?.get(id)?.answer = answer
+                    p1.body()?.let { Log.i("ANSWER_SEND_RESPONSE", it) }
+
                 }
 
                 override fun onFailure(p0: Call<String?>, p1: Throwable) {
@@ -51,17 +53,18 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
 
     fun loadData(dayOfWeek: Int) {
         val disposable = when (dayOfWeek) {
-            1 ->
+            2 ->
                 ApiFactory.apiService.getMonday()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.d("TRAINING_TEXT", it.toString())
+                        Log.i("TRAINING_TEXT", it.toString())
+                        println(it.toString())
                     }, {
-                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
+                        Log.i("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
-            2 ->
+            3 ->
                 ApiFactory.apiService.getTuesday()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -71,7 +74,7 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     }, {
                         Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
-            3 ->
+            4 ->
                 ApiFactory.apiService.getWednesday()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -81,7 +84,7 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     }, {
                         Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
-            4 ->
+            5 ->
                 ApiFactory.apiService.getThursday()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -91,7 +94,7 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     }, {
                         Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
-            5 ->
+            6 ->
                 ApiFactory.apiService.getFriday()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -101,7 +104,7 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     }, {
                         Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
-            6 ->
+            7 ->
                 ApiFactory.apiService.getSaturday()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -111,7 +114,7 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     }, {
                         Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
-            7 ->
+            1 ->
                 ApiFactory.apiService.getSunday()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
