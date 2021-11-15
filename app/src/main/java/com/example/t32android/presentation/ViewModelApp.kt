@@ -21,34 +21,68 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
     var _trainingInfo = MutableLiveData<List<TrainingItem>>()
     var _answerInfo = MutableLiveData<List<QuestionAnswerItem>>()
 
-    fun sendQuestion(question:String,id:Int){
-        val response = ApiFactory.apiService.sendQuestion(question,id)
-            .enqueue(object : Callback<String?>{
-                override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
-                    Log.i("QUESTION_SEND_RESPONSE", p1.toString())
-                    Log.i("QUESTION_SEND_CALL", p0.toString())
-                }
+    fun sendQuestion(question: String, id: Int) {
+        val response = ApiFactory.apiService.sendQuestion(question, id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                Log.d("QUESTION_SEND_RESPONSE", it.toString())
+                Log.d("QUESTION_iSEND_RESPONSE", id.toString())
+                Log.d("QUESTION_qSEND_RESPONSE", question)
 
-                override fun onFailure(p0: Call<String?>, p1: Throwable) {
-                    p1.printStackTrace()
-                }
+            }, {
+                it.printStackTrace()
             })
+        compositeDisposable.add(response)
+//            .enqueue(object : Callback<String?> {
+//                override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
+//                    val resp = p1.body().toString()
+//                    val cal = p0.toString()
+//                    Log.d("QUESTION_SEND_RESPONSE", resp)
+//                    Log.d("QUESTION_SEND_CALL", cal)
+//                }
+//
+//                override fun onFailure(p0: Call<String?>, p1: Throwable) {
+//                    p1.printStackTrace()
+//                }
+//            })
+        Log.d("QUESTION_SEND_RESPONSE", response.toString())
     }
 
-    fun getAnswer(id:Int){
-        ApiFactory.apiService.getAnswer(id)
-            .enqueue(object :Callback<String?>{
-                override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
-                   val answer = p1.body()
-                    _answerInfo.value?.get(id)?.answer = answer
-                    p1.body()?.let { Log.i("ANSWER_SEND_RESPONSE", it) }
+    fun getAnswer(id: Int) {
+//        val response = ApiFactory.apiService.getAnswer(id)
+//            .enqueue(object :Callback<String?>{
+//                override fun onResponse(p0: Call<String?>, p1: Response<String?>) {
+//                    if(p1.isSuccessful) {
+//                        val answer = p1.body().toString()
+//
+//                        _answerInfo.value?.get(id)?.answer = answer
+//                    }else{
+//                        Log.d("RESPONSE_FAIL",p1.body().toString())
+//                    }
+//                    p1.body()?.let { Log.d("ANSWER_SEND_RESPONSE", it) }
+//
+//                }
+//
+//                override fun onFailure(p0: Call<String?>, p1: Throwable) {
+//                    p1.printStackTrace()
+//                }
+//            })
+//        Log.d("ANSWER_SEND_RESPONSE",response.toString())
 
-                }
+        val disposable = ApiFactory.apiService.getAnswer(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                _answerInfo.value?.get(id)?.answer = it
+                Log.d("ANSWER_SEND_RESPONSE", it.toString())
 
-                override fun onFailure(p0: Call<String?>, p1: Throwable) {
-                    p1.printStackTrace()
-                }
-            })
+            },
+                {
+                    it.printStackTrace()
+                })
+        compositeDisposable.add(disposable)
+
     }
 
     fun loadData(dayOfWeek: Int) {
@@ -59,10 +93,10 @@ class ViewModelApp(application: Application) : AndroidViewModel(application) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         _trainingInfo.value = it
-                        Log.i("TRAINING_TEXT", it.toString())
+                        Log.d("TRAINING_TEXT", it.toString())
                         println(it.toString())
                     }, {
-                        Log.i("TRAINING_TEXT", it.message.toString() + "ERROR")
+                        Log.d("TRAINING_TEXT", it.message.toString() + "ERROR")
                     })
             3 ->
                 ApiFactory.apiService.getTuesday()

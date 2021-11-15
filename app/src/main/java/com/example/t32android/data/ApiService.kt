@@ -1,6 +1,5 @@
 package com.example.t32android.data
 
-import com.example.t32android.domain.pojo.QuestionAnswerItem
 import com.example.t32android.domain.pojo.TrainingItem
 import io.reactivex.Single
 import retrofit2.Call
@@ -34,11 +33,11 @@ interface ApiService {
     fun sendQuestion(
         @Field("ask") ask:String,
         @Field("id") id:Int
-    ): Call<String>
+    ): Single<String?>
 
-    @FormUrlEncoded
-    @POST("response.php")
-    fun getAnswer(@Field("id")id:Int): Call<String?>
+
+    @GET("response.php")
+    fun getAnswer(@Query("id")id:Int): Single<String?>
 }
 
 
